@@ -11,7 +11,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class PluralizePluginTest {
+public class PluralizePluginIntegrationTest {
 
     private Path directory;
 
