@@ -1,1 +1,15 @@
 language: java
+addons:
+  sonarcloud:
+    organization: "svartifoss-github" # the key of the org you chose at step #3
+    token:
+      secure: 76df04dfd92e4759dc127a08db0ebeba653c26a9 # encrypted value of your token
+script:
+  # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
+
+  #mvn sonar:sonar \
+  #-Dsonar.projectKey=svartifoss_jaxb2-pluralize \
+  #-Dsonar.organization=svartifoss-github \
+  #-Dsonar.host.url=https://sonarcloud.io \
+  #-Dsonar.login=76df04dfd92e4759dc127a08db0ebeba653c26a9
