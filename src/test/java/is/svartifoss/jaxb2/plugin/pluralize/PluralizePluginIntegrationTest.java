@@ -1,6 +1,7 @@
 package is.svartifoss.jaxb2.plugin.pluralize;
 
 import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.utils.CodeGenerationUtils;
 import com.github.javaparser.utils.SourceRoot;
 import com.sun.tools.xjc.Driver;
@@ -15,7 +16,6 @@ import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PluralizePluginIntegrationTest {
 
@@ -58,11 +58,23 @@ public class PluralizePluginIntegrationTest {
     public void test() throws Exception {
         runXjc("TestTypeWithACollectionOfElements");
         final Path path = Paths.get("target", "dummy", "generated", "TestType.java");
-        assertTrue(Files.exists(path));
-        SourceRoot sourceRoot = new SourceRoot(CodeGenerationUtils.mavenModuleRoot(PluralizePlugin.class).resolve("target/dummy/generated"));
-        CompilationUnit cu = sourceRoot.parse("", "TestType.java");
-        assertThat(cu.getPrimaryType()).isPresent();
-        assertThat(cu.getPrimaryTypeName()).contains("TestType");
+        final SourceRoot sourceRoot = new SourceRoot(CodeGenerationUtils.mavenModuleRoot(PluralizePlugin.class)
+                                                                        .resolve("target/dummy/generated"));
+        final CompilationUnit compilationUnit = sourceRoot.parse("", "TestType.java");
+        assertThat(compilationUnit.getTypes()).hasSize(1);
+        assertThat(compilationUnit.getType(0)).isInstanceOf(ClassOrInterfaceDeclaration.class);
+        assertThat(((ClassOrInterfaceDeclaration) compilationUnit.getType(0)).isInterface()).isFalse();
+        assertThat(compilationUnit.getType(0).getFields()).hasSize(1);
+        assertThat(compilationUnit.getType(0).getFields().get(0).getVariables()).hasSize(1);
+        assertThat(compilationUnit.getType(0)
+                                  .getFields()
+                                  .get(0)
+                                  .getVariables()
+                                  .get(0)
+                                  .getName()
+                                  .getIdentifier()).isEqualTo("elements");
+        assertThat(compilationUnit.getType(0).getMethods()).hasSize(1);
+        assertThat(compilationUnit.getType(0).getMethods().get(0).getName().getIdentifier()).isEqualTo("getElements");
     }
 
     private void runXjc(final String name) throws Exception {
