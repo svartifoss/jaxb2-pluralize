@@ -63,19 +63,19 @@ public class PluralizePluginUnitTest {
     }
 
     @Test
-    public void thePluginReportsTheExpectedOptionName() {
+    public void theCorrectOptionNameIsUsed() {
         final String optionName = pluralizePlugin.getOptionName();
         assertThat(optionName).isEqualTo("Xpluralize");
     }
 
     @Test
-    public void thePluginReportsTheExpectedUsage() {
+    public void usageIsReportedCorrectly() {
         final String usage = pluralizePlugin.getUsage();
         assertThat(usage).isEqualTo("\t-Xpluralize\tenable");
     }
 
     @Test
-    public void thePlugin() {
+    public void postProcessingWillPluralizeACollectionProperty() {
         Mockito.when(cPropertyInfo.isCollection()).thenReturn(true);
         Mockito.when(cPropertyInfo.getName(true)).thenReturn("Element");
         Mockito.when(cPropertyInfo.getName(false)).thenReturn("element");
@@ -87,5 +87,17 @@ public class PluralizePluginUnitTest {
         verifyZeroInteractions(errorHandler);
         verify(cPropertyInfo).setName(true, "Elements");
         verify(cPropertyInfo).setName(false, "elements");
+    }
+
+    @Test
+    public void postProcessingWillNotPluralizeAPropertyThatIsNotACollection() {
+        Mockito.when(cPropertyInfo.isCollection()).thenReturn(false);
+        Mockito.when(cClassInfo.getProperties()).thenReturn(singletonList(cPropertyInfo));
+        Mockito.when(model.beans()).thenReturn(singletonMap(nClass, cClassInfo));
+
+        pluralizePlugin.postProcessModel(model, errorHandler);
+
+        verifyZeroInteractions(errorHandler);
+        verifyZeroInteractions(cPropertyInfo);
     }
 }
