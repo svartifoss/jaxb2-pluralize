@@ -1,0 +1,26 @@
+coverage:
+  status:
+    project:
+      default: off
+      unittest:
+        target: 50%
+        flags: unittest
+      integrationtests:
+        target: 50%
+        flags: integrationtests
+
+#flags:
+#  # filter the folder(s) you wish to measure by that flag
+#  backend:
+#    # only include files in the backend folder
+#    paths:
+#      - app/backend/
+#  frontend:
+#    paths:
+#      - app/frontend/
+#  api:
+#    paths:
+#      - app/api/
+#  tests:
+#    paths:
+#      - tests/
