@@ -8,7 +8,6 @@ import com.sun.tools.xjc.model.Model;
 import com.sun.tools.xjc.outline.Outline;
 import org.atteo.evo.inflector.English;
 import org.xml.sax.ErrorHandler;
-import org.xml.sax.SAXException;
 
 import java.util.Collection;
 
@@ -48,7 +47,7 @@ public class PluralizePlugin extends Plugin {
     }
 
     @Override
-    public boolean run(final Outline outline, final Options options, final ErrorHandler errorHandler) throws SAXException {
+    public boolean run(final Outline outline, final Options options, final ErrorHandler errorHandler) {
         return true;
     }
 }
