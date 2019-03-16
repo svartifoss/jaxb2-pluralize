@@ -10,7 +10,7 @@ addons:
       secure: 76df04dfd92e4759dc127a08db0ebeba653c26a9 # encrypted value of your token
 script:
   # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
-  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent coveralls:report install sonar:sonar
+  - mvn clean install jacoco:report coveralls:report sonar:sonar
 
 cache:
   directories:
