@@ -21,3 +21,6 @@ cache:
   #-Dsonar.organization=svartifoss-github \
   #-Dsonar.host.url=https://sonarcloud.io \
   #-Dsonar.login=76df04dfd92e4759dc127a08db0ebeba653c26a9
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
