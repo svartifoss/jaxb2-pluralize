@@ -7,6 +7,8 @@
     <groupId>is.svartifoss.jaxb2</groupId>
     <artifactId>jaxb2-pluralize</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <name>JABX2 Pluralize Plugin</name>
+    <url>https://github.com/svartifoss/jaxb2-pluralize</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
