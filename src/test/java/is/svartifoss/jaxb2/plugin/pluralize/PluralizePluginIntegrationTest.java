@@ -57,7 +57,6 @@ public class PluralizePluginIntegrationTest {
     @Test
     public void test() throws Exception {
         runXjc("TestTypeWithACollectionOfElements");
-        final Path path = Paths.get("target", "dummy", "generated", "TestType.java");
         final SourceRoot sourceRoot = new SourceRoot(CodeGenerationUtils.mavenModuleRoot(PluralizePlugin.class)
                                                                         .resolve("target/dummy/generated"));
         final CompilationUnit compilationUnit = sourceRoot.parse("", "TestType.java");
